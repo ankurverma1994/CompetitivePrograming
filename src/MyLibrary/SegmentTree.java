@@ -1,158 +1,74 @@
-package MyLibrary;/**
+package MyLibrary;
+
+/**
  * Created by ankurverma1994 on 30/9/15.
  */
-
-import java.io.*;
-import java.util.*;
-
 class SegmentTree {
-    //------------> Solution starts here!!
-    void solve() {
-        for (int tc = ii(); tc > 0; tc--) {
+    public static void main(String[] args) {
+        int a[] = {4, 5, 6, 10, 2, 12};
+        SegmentTree segmentTree = new SegmentTree(0, a.length - 1, a);
+        System.out.println(segmentTree.query(0, 5));
+        System.out.println(segmentTree.query(0, 2));
+        System.out.println(segmentTree.query(3, 5));
+        System.out.println(segmentTree.query(0, 1));
+        System.out.println(segmentTree.query(2, 2));
+        System.out.println(segmentTree.query(3, 4));
+        System.out.println(segmentTree.query(5, 5));
+        segmentTree.update(2, 10, a);
+        System.out.println(segmentTree.query(0, 5));
+        System.out.println(segmentTree.query(0, 2));
+        System.out.println(segmentTree.query(3, 5));
+        System.out.println(segmentTree.query(0, 1));
+        System.out.println(segmentTree.query(2, 2));
+        System.out.println(segmentTree.query(3, 4));
+        System.out.println(segmentTree.query(5, 5));
+
+    }
+
+    int from;
+    int to;
+    long sum;
+    SegmentTree left;
+    SegmentTree right;
+
+    SegmentTree(int from, int to, int A[]) {
+        this.from = from;
+        this.to = to;
+        if (from == to) {
+            sum = A[from];
+        } else {
+            int mid = (from + to) / 2;
+            left = new SegmentTree(from, mid, A);
+            right = new SegmentTree(mid + 1, to, A);
+            sum = (left.sum + right.sum);
         }
     }
 
-    //------------> Solution ends here!!
-    InputStream obj;
-    PrintWriter out;
-    String check = "";
-
-    public static void main(String[] args) throws IOException {
-        new SegmentTree().main1();
-    }
-
-    void main1() throws IOException {
-        out = new PrintWriter(System.out);
-        obj = check.isEmpty() ? System.in : new ByteArrayInputStream(check.getBytes());
-        // obj=check.isEmpty() ? new FileInputStream("/home/ankurverma1994/d001951c-2-input-d001891.txt") : new ByteArrayInputStream(check.getBytes());
-        solve();
-        out.flush();
-        out.close();
-    }
-
-    byte inbuffer[] = new byte[1024];
-    int lenbuffer = 0, ptrbuffer = 0;
-
-    int readByte() {
-        if (lenbuffer == -1)
-            throw new InputMismatchException();
-        if (ptrbuffer >= lenbuffer) {
-            ptrbuffer = 0;
-            try {
-                lenbuffer = obj.read(inbuffer);
-            } catch (IOException e) {
-                throw new InputMismatchException();
-            }
-        }
-        if (lenbuffer <= 0)
-            return -1;
-        return inbuffer[ptrbuffer++];
-    }
-
-    boolean isSpaceChar(int c) {
-        return (!(c >= 33 && c <= 126));
-    }
-
-    int skip() {
-        int b;
-        while ((b = readByte()) != -1 && isSpaceChar(b)) ;
-        return b;
-    }
-
-    String is() {
-        int b = skip();
-        StringBuilder sb = new StringBuilder();
-        while (!(isSpaceChar(b))) // when nextLine, (isSpaceChar(b) && b!=' ')
-        {
-            sb.appendCodePoint(b);
-            b = readByte();
-        }
-        return sb.toString();
-    }
-
-    int ii() {
-        int num = 0, b;
-        boolean minus = false;
-        while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-')) ;
-        if (b == '-') {
-            minus = true;
-            b = readByte();
-        }
-        while (true) {
-            if (b >= '0' && b <= '9') {
-                num = num * 10 + (b - '0');
-            } else {
-                return minus ? -num : num;
-            }
-            b = readByte();
+    long query(int L, int R) {
+        if (L <= from && to <= R) {
+            return sum;
+        } else if (to < L || R < from) {
+            return 0;
+        } else {
+            long sumL = left.query(L, R);
+            long sumR = right.query(L, R);
+            return (sumL + sumR);
         }
     }
 
-    long il() {
-        long num = 0;
-        int b;
-        boolean minus = false;
-        while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-')) ;
-        if (b == '-') {
-            minus = true;
-            b = readByte();
+    void update(int pos, int val, int A[]) {
+        int diff = val - A[pos];
+        A[pos] = val;
+        updateUtil(pos, diff);
+    }
+
+    void updateUtil(int pos, int diff) {
+        if (pos < from || pos > to)
+            return;
+        sum = sum + diff;
+        if (from != to) {
+            left.updateUtil(pos, diff);
+            right.updateUtil(pos, diff);
         }
-        while (true) {
-            if (b >= '0' && b <= '9') {
-                num = num * 10 + (b - '0');
-            } else {
-                return minus ? -num : num;
-            }
-            b = readByte();
-        }
-    }
-
-    float nf() {
-        return Float.parseFloat(is());
-    }
-
-    double id() {
-        return Double.parseDouble(is());
-    }
-
-    char ic() {
-        return (char) skip();
-    }
-
-    int[] iia(int n) {
-        int a[] = new int[n];
-        for (int i = 0; i < n; i++)
-            a[i] = ii();
-        return a;
-    }
-
-    long[] ila(int n) {
-        long a[] = new long[n];
-        for (int i = 0; i < n; i++)
-            a[i] = il();
-        return a;
-    }
-
-    String[] isa(int n) {
-        String a[] = new String[n];
-        for (int i = 0; i < n; i++)
-            a[i] = is();
-        return a;
-    }
-
-    double[][] idm(int n, int m) {
-        double a[][] = new double[n][m];
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
-                a[i][j] = id();
-        return a;
-    }
-
-    int[][] iim(int n, int m) {
-        int a[][] = new int[n][m];
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
-                a[i][j] = ii();
-        return a;
     }
 }
