@@ -22,7 +22,6 @@ class SegmentTree {
         System.out.println(segmentTree.query(2, 2));
         System.out.println(segmentTree.query(3, 4));
         System.out.println(segmentTree.query(5, 5));
-
     }
 
     int from;
