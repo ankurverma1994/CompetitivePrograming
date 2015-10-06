@@ -5,21 +5,17 @@ package OCT15;/**
 import java.io.*;
 import java.util.*;
 
-class SUBINC {
+class WDTBAM {
     //------------> Solution starts here!!
     void solve() {
         for (int tc = ii(); tc > 0; tc--) {
-            int n = ii(), a[] = iia(n), count = 1;
-            long ans = 0;
-            for (int i = 1; i < n; i++) {
-                if (a[i] >= a[i - 1])
-                    count++;
-                else {
-                    ans += (long) count * (count + 1) / 2;
-                    count = 1;
-                }
-            }
-            ans += (long) count * (count + 1) / 2;
+            int n = ii();
+            char correct[] = is().toCharArray(), answer[] = is().toCharArray();
+            int winnings[] = iia(n + 1);
+            int count = 0;
+            for (int i = 0; i < n; i++) if (correct[i] == answer[i]) count++;
+            int ans = Integer.MIN_VALUE;
+            for (int i = 0; i <= count; i++) if (ans < winnings[i]) ans = winnings[i];
             out.println(ans);
         }
     }
@@ -30,7 +26,7 @@ class SUBINC {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new SUBINC().main1();
+        new WDTBAM().main1();
     }
 
     void main1() throws IOException {

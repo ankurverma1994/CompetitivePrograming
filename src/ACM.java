@@ -1,27 +1,29 @@
-package OCT15;/**
- * Created by ankurverma1994 on 2/10/15.
+/**
+ * Created by ankurverma1994 on 4/10/15.
  */
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
-class SUBINC {
+class ACM {
     //------------> Solution starts here!!
     void solve() {
-        for (int tc = ii(); tc > 0; tc--) {
-            int n = ii(), a[] = iia(n), count = 1;
-            long ans = 0;
-            for (int i = 1; i < n; i++) {
-                if (a[i] >= a[i - 1])
-                    count++;
-                else {
-                    ans += (long) count * (count + 1) / 2;
-                    count = 1;
-                }
-            }
-            ans += (long) count * (count + 1) / 2;
-            out.println(ans);
+        int n = ii();
+        int x[] = new int[n];
+        int y[] = new int[n];
+        int mod = 1000000007;
+        for (int i = 0; i < n; i++) {
+            x[i] = ii();
+            y[i] = ii();
         }
+        Arrays.sort(x);
+        Arrays.sort(y);
+        long distance = 0;
+        for (int i = n - 1; i > 0; i--) distance = (distance + ((long) i * x[i]) % mod + ((long) i * y[i]) % mod) % mod;
+        for (int i = 0; i < n; i++) distance = (distance - (long) (n - i - 1) * x[i] - (long) (n - i - 1) * y[i]) % mod;
+        while (distance < 0) distance += mod;
+        out.println(distance);
     }
 
     //------------> Solution ends here!!
@@ -30,7 +32,7 @@ class SUBINC {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new SUBINC().main1();
+        new ACM().main1();
     }
 
     void main1() throws IOException {

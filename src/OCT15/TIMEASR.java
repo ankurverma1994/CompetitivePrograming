@@ -1,26 +1,17 @@
 package OCT15;/**
- * Created by ankurverma1994 on 2/10/15.
+ * Created by ankurverma1994 on 3/10/15.
  */
 
 import java.io.*;
 import java.util.*;
 
-class SUBINC {
+class TIMEASR {
     //------------> Solution starts here!!
     void solve() {
         for (int tc = ii(); tc > 0; tc--) {
-            int n = ii(), a[] = iia(n), count = 1;
-            long ans = 0;
-            for (int i = 1; i < n; i++) {
-                if (a[i] >= a[i - 1])
-                    count++;
-                else {
-                    ans += (long) count * (count + 1) / 2;
-                    count = 1;
-                }
+            double A = id();
+            for (int x = 0; x < 12; x++) {
             }
-            ans += (long) count * (count + 1) / 2;
-            out.println(ans);
         }
     }
 
@@ -30,7 +21,7 @@ class SUBINC {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new SUBINC().main1();
+        new TIMEASR().main1();
     }
 
     void main1() throws IOException {

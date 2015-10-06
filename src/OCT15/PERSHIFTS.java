@@ -1,27 +1,42 @@
 package OCT15;/**
- * Created by ankurverma1994 on 2/10/15.
+ * Created by ankurverma1994 on 6/10/15.
  */
 
 import java.io.*;
 import java.util.*;
 
-class SUBINC {
+class PERSHIFTS {
     //------------> Solution starts here!!
     void solve() {
         for (int tc = ii(); tc > 0; tc--) {
-            int n = ii(), a[] = iia(n), count = 1;
-            long ans = 0;
-            for (int i = 1; i < n; i++) {
-                if (a[i] >= a[i - 1])
-                    count++;
-                else {
-                    ans += (long) count * (count + 1) / 2;
-                    count = 1;
-                }
-            }
-            ans += (long) count * (count + 1) / 2;
-            out.println(ans);
+            int n = ii(), k = ii(), p[] = iia(n), q[] = iia(n);
+            bruteforce(p, k);
         }
+    }
+
+    void bruteforce(int p[], int k) {
+        Queue<int[]> found = new LinkedList<>();
+        Queue<int[]> todo = new LinkedList<>();
+        todo.add(p);
+        System.out.println(todo.get(0));
+        int n = p.length;
+        while (!todo.isEmpty()) {
+            int x[] = todo.poll(todo.size() - 1);
+            int perm[] = new int[n];
+            for (int i = 0; i < n - k + 1; i++) {
+                int z = 0;
+                for (int j = 0; j <= i; j++, z++) perm[z] = x[j];
+                for (int j = i + 1; j <= i + k; j++, z++) perm[z] = x[j];
+                for (int j = i; j <= i + 1; j++, z++) perm[z] = x[j];
+                for (int j = i + k; j < n; j++, z++) perm[z] = x[j];
+            }
+            if (!found.contains(perm)) {
+                found.add(perm);
+                todo.add(perm);
+            }
+        }
+        for (int i = 0; i < found.size(); i++)
+            out.println(found.get(i).toString());
     }
 
     //------------> Solution ends here!!
@@ -30,7 +45,7 @@ class SUBINC {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new SUBINC().main1();
+        new PERSHIFTS().main1();
     }
 
     void main1() throws IOException {
