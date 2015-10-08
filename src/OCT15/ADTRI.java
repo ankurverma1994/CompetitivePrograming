@@ -1,56 +1,35 @@
 package OCT15;/**
- * Created by ankurverma1994 on 6/10/15.
+ * Created by ankurverma1994 on 8/10/15.
  */
 
 import java.io.*;
 import java.util.*;
 
-class PERSHIFTS {
+class ADTRI {
     //------------> Solution starts here!!
     void solve() {
         for (int tc = ii(); tc > 0; tc--) {
-            int n = ii(), k = ii();
-            String p = is(), q = is();
-            bruteforce(p, q, k);
-//            List<String> one = bruteforce("abcdef", "abcdef", 3);
-//            List<String> two = bruteforce("abcdef", "abcdef", 5);
-//            boolean wa = true;
-//            for (int i = 0; i < one.size(); i++)
-//                if (two.contains(one.get(i)))
-//                    continue;
-//                else {
-//                    wa = false;
-//                    break;
-//                }
-//            if (wa)
-//                out.println("Same");
-//            else
-//                out.println("Unequal");
-        }
-    }
-
-    List<String> bruteforce(String p, String q, int k) {
-        List<String> strings = new ArrayList<>();
-        String perm = "";
-        strings.add(p);
-        int j = 0;
-        while (j < strings.size()) {
-            String tmp = strings.get(j);
-            int n = tmp.length();
-            for (int i = 0; i <= (n - k); i++) {
-                perm = tmp.substring(0, i) + tmp.charAt(i + k - 1) + tmp.substring(i, i + k - 1) + tmp.substring(i + k);
-                if (!strings.contains(perm))
-                    strings.add(perm);
+            int c = ii();
+            boolean answer = false;
+            while (c % 2 == 0) c /= 2;
+            for (int i = 3; i <= Math.sqrt(c); i++) {
+                while (c % i == 0) {
+                    c = c / i;
+                    if (i % 4 == 1) {
+                        answer = true;
+                        break;
+                    }
+                }
+                if (answer)
+                    break;
             }
-            out.println(strings.get(j));
-            j++;
+            if (c > 2 && c % 4 == 1)
+                answer = true;
+            if (answer)
+                out.println("YES");
+            else
+                out.println("NO");
         }
-        out.println(strings.size());
-        if (strings.contains(q))
-            out.println("YES");
-        else
-            out.println("NO");
-        return strings;
     }
 
     //------------> Solution ends here!!
@@ -59,11 +38,11 @@ class PERSHIFTS {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new PERSHIFTS().main1();
+        new ADTRI().main1();
     }
 
     void main1() throws IOException {
-        out = new PrintWriter("/home/ankurverma1994/aa.txt");
+        out = new PrintWriter(System.out);
         obj = check.isEmpty() ? System.in : new ByteArrayInputStream(check.getBytes());
         // obj=check.isEmpty() ? new FileInputStream("/home/ankurverma1994/d001951c-2-input-d001891.txt") : new ByteArrayInputStream(check.getBytes());
         solve();
