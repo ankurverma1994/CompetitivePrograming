@@ -1,24 +1,46 @@
-package OCT15;
 /**
- * Created by ankurverma1994 on 3/10/15.
+ * Created by ankurverma1994 on 9/10/15.
  */
 
 import java.io.*;
 import java.util.*;
 
-class TIMEASR {
+class ACM12 {
     //------------> Solution starts here!!
     void solve() {
         for (int tc = ii(); tc > 0; tc--) {
-            double A = id();
-            for (int hours = 0; hours < 12; hours++)
-                for (int minutes = 0; minutes < 60; minutes++) {
-                    double angle = Math.abs(30 * hours - 11.0 * minutes / 2);
-                    if (angle > 180)
-                        angle = 360 - angle;
-                    if (Math.abs(angle - A) < 1 / 120.0)
-                        out.printf("%02d:%02d\n", hours, minutes);
+            int m = ii(), n = ii();
+            int w[][] = iim(m, n);
+            int ans = Integer.MIN_VALUE / 2;
+            for (int i = 0; i < m - 1; i++) {
+                for (int j = 0; j < n - 1; j++) {
+                    int diag = 2;
+                    int x = i;
+                    int y = j;
+                    while (x < m - 1 && y < n - 1) {
+
+                        //lefttop point (a,b)
+                        //leftbottom point (c,d)
+                        int sum = 0;
+                        int a = i, b = j, c = i, d = j + diag - 1;
+                        for (int k = 1; k <= diag; k++) {
+                            sum = sum + w[a][b] + w[c][d];
+                            a++;
+                            b++;
+                            c++;
+                            d--;
+                        }
+                        if (diag % 2 == 1)
+                            sum -= w[i + diag / 2][j + diag / 2];
+                        if (ans < sum)
+                            ans = sum;
+                        diag++;
+                        x++;
+                        y++;
+                    }
                 }
+            }
+            out.println(ans);
         }
     }
 
@@ -28,7 +50,7 @@ class TIMEASR {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new TIMEASR().main1();
+        new ACM12().main1();
     }
 
     void main1() throws IOException {

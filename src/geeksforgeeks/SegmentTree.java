@@ -3,8 +3,15 @@ package geeksforgeeks;
 class SegmentTree {
     int st[];
 
+    /* Constructor to construct segment tree from given array. This constructor
+       allocates memory for segment tree and calls constructSTUtil() to
+       fill the allocated memory */
     SegmentTree(int arr[], int n) {
-        st = constructST(arr, n);
+        // Allocate memory for segment tree
+        int x = (int) (Math.ceil(Math.log(n) / Math.log(2))); //Height of segment tree
+        int max_size = 2 * (int) Math.pow(2, x) - 1; //Maximum size of segment tree
+        st = new int[max_size];
+        constructSTUtil(arr, 0, n - 1, 0);
     }
 
     // A utility function to get the middle index from corner indexes.
@@ -105,22 +112,6 @@ class SegmentTree {
         return st[si];
     }
 
-    /* Function to construct segment tree from given array. This function
-       allocates memory for segment tree and calls constructSTUtil() to
-       fill the allocated memory */
-    int[] constructST(int arr[], int n) {
-        // Allocate memory for segment tree
-        int x = (int) (Math.ceil(Math.log(n) / Math.log(2))); //Height of segment tree
-        int max_size = 2 * (int) Math.pow(2, x) - 1; //Maximum size of segment tree
-        int st[] = new int[max_size];
-
-        // Fill the allocated memory st
-        constructSTUtil(arr, 0, n - 1, 0);
-
-        // Return the constructed segment tree
-        return st;
-    }
-
     // Driver program to test above functions
     public static void main(String args[]) {
         int arr[] = {1, 3, 5, 7, 9, 11};
@@ -128,7 +119,6 @@ class SegmentTree {
         SegmentTree tree = new SegmentTree(arr, n);
 
         // Build segment tree from given array
-
 
         // Print sum of values in array from index 1 to 3
         System.out.println("Sum of values in given range = " + tree.getSum(n, 1, 3));

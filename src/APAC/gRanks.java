@@ -1,24 +1,53 @@
-package OCT15;
+package APAC;
 /**
- * Created by ankurverma1994 on 3/10/15.
+ * Created by ankurverma1994 on 18/10/15.
  */
 
 import java.io.*;
 import java.util.*;
 
-class TIMEASR {
+class gRanks {
     //------------> Solution starts here!!
     void solve() {
-        for (int tc = ii(); tc > 0; tc--) {
-            double A = id();
-            for (int hours = 0; hours < 12; hours++)
-                for (int minutes = 0; minutes < 60; minutes++) {
-                    double angle = Math.abs(30 * hours - 11.0 * minutes / 2);
-                    if (angle > 180)
-                        angle = 360 - angle;
-                    if (Math.abs(angle - A) < 1 / 120.0)
-                        out.printf("%02d:%02d\n", hours, minutes);
+        int TT = ii();
+        for (int tc = 1; tc <= TT; tc++) {
+            int P = ii(), S[] = iia(P);
+            Set<String> rank = new HashSet<>();
+            ArrayList<Integer> arrayList[] = new ArrayList[100000];
+            int len = 0;
+            for (int N = ii(); N > 0; N--) {
+                int W = ii();
+                String names[] = isa(P);
+                for (int i = 0; i < P; i++) {
+                    if (!rank.contains(names[i])) {
+                        rank.add(names[i]);
+                        arrayList[len] = new ArrayList<>();
+                        arrayList[len].add(W * S[i]);
+                        len++;
+                    } else {
+                        arrayList[len].add(W * S[i]);
+                    }
                 }
+            }
+            int M = ii();
+            int arr[][] = new int[len][2];
+            for (int i = 0; i < len; i++) {
+                Integer[] abc = (Integer[]) arrayList[i].toArray();
+                Arrays.sort(abc);
+                arr[i][0] = abc[abc.length - 1] + abc[abc.length - 2];
+                arr[i][1] = i;
+            }
+            Arrays.sort(arr, (int aa[], int bb[]) ->
+            {
+                if (aa[0] < bb[0])
+                    return -1;
+                return 1;
+            });
+            out.println("Case #" + tc + ":");
+            int R = 1;
+            for (int i = 0; i < len; i++) {
+
+            }
         }
     }
 
@@ -28,7 +57,7 @@ class TIMEASR {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new TIMEASR().main1();
+        new gRanks().main1();
     }
 
     void main1() throws IOException {

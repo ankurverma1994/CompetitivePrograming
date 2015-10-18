@@ -1,24 +1,14 @@
-package OCT15;
 /**
- * Created by ankurverma1994 on 3/10/15.
+ * Created by ankurverma1994 on 11/10/15.
  */
 
 import java.io.*;
 import java.util.*;
 
-class TIMEASR {
+class ACm {
     //------------> Solution starts here!!
     void solve() {
         for (int tc = ii(); tc > 0; tc--) {
-            double A = id();
-            for (int hours = 0; hours < 12; hours++)
-                for (int minutes = 0; minutes < 60; minutes++) {
-                    double angle = Math.abs(30 * hours - 11.0 * minutes / 2);
-                    if (angle > 180)
-                        angle = 360 - angle;
-                    if (Math.abs(angle - A) < 1 / 120.0)
-                        out.printf("%02d:%02d\n", hours, minutes);
-                }
         }
     }
 
@@ -28,7 +18,7 @@ class TIMEASR {
     String check = "";
 
     public static void main(String[] args) throws IOException {
-        new TIMEASR().main1();
+        new ACm().main1();
     }
 
     void main1() throws IOException {
